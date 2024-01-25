@@ -21,14 +21,21 @@ public class Llibre {
     private String editorial;
 
     @ManyToOne
-    @JoinColumn(name = "autorId", insertable = false, updatable = false)
-    private int id_autor;
+    @JoinColumn(name = "autor_id", insertable = false, updatable = false)
+    private Autor autor;
 
     @ManyToMany(mappedBy = "llibres")
     private Set<Biblioteca> biblioteques;
 
     @ManyToMany(mappedBy = "llibres")
     private Set<Persona> persones;
+
+    public Llibre(String nom, String editorial) {
+        this.nom = nom;
+        this.editorial = editorial;
+    }
+
+    public Llibre(){}
 
     public int getLlibreid() {
         return llibreid;
@@ -42,9 +49,6 @@ public class Llibre {
         return editorial;
     }
 
-    public int getId_autor() {
-        return id_autor;
-    }
 
     public Set<Biblioteca> getBiblioteques() {
         return biblioteques;
@@ -66,5 +70,10 @@ public class Llibre {
         this.editorial = editorial;
     }
 
-    
+    @Override
+    public String toString() {
+        String resultat;
+        resultat = String.format("%s: %s, %s", llibreid, nom, editorial);
+        return resultat;
+    }
 }

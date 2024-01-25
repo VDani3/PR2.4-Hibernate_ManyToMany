@@ -16,11 +16,15 @@ public class Autor {
     @Column(name = "nom")
     private String nom;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "Llibres_Autor",
-        joinColumns = {@JoinColumn(referencedColumnName = "autorId")},
-        inverseJoinColumns = {@JoinColumn(referencedColumnName = "llibreId")})
+    @OneToMany
+    @JoinColumn(name = "autorId")
     private Set<Llibre> llibres;
+
+    public Autor(String n){
+        this.nom = n;
+    }
+
+    public Autor(){}
 
     public String getNom() {
         return nom;
@@ -38,5 +42,13 @@ public class Autor {
         return llibres;
     }
 
-    
+    public void setLlibres(Set<Llibre> llibres) {
+        this.llibres = llibres;
+    }
+
+    public String toString() {
+        String resultat;
+        resultat = String.format("%s: %s, Items: ", autorId, nom);
+        return resultat;
+    }
 }

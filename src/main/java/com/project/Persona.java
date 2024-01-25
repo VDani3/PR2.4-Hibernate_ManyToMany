@@ -28,6 +28,18 @@ public class Persona {
         inverseJoinColumns = {@JoinColumn(referencedColumnName = "llibreId")})
     private Set<Llibre> llibres;
 
+    public void setLlibres(Set<Llibre> llibres) {
+        this.llibres = llibres;
+    }
+
+    public Persona(String d, String n, String t) {
+        this.dni = d;
+        this.nom = n;
+        this.telefon = t;
+    }
+
+    public Persona(){}
+
     public int getPersonaId() {
         return personaId;
     }
@@ -64,5 +76,10 @@ public class Persona {
         return llibres;
     }
 
+    public String toString() {
+        String resultat;
+        resultat = String.format("%s: %s, %s, Llibres: ", personaId, dni, telefon);
+        return resultat;
+    }
     
 }
