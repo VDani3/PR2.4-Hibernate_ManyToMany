@@ -1,5 +1,6 @@
 package com.project;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -76,9 +77,31 @@ public class Persona {
         return llibres;
     }
 
+    public String queryLlibres() {
+        long id = this.getPersonaId();
+        String queryString = "SELECT DISTINCT l.* FROM Llibre l " +
+                            "JOIN Llibres_Persona lb ON l.llibreId = lb.llibres_llibreId " +
+                            "WHERE lb.persones_personaId = " + id;
+    
+        List<Object[]> results = Manager.queryTable(queryString);
+    
+        StringBuilder resultString = new StringBuilder();
+        
+        resultString.append("[");
+        for (Object[] row : results) {
+            for (Object column : row) {
+                resultString.append(column).append(", ");
+            }
+           resultString.append("| ");
+        }
+        resultString.append("]");
+    
+        return resultString.toString();
+    }
+
     public String toString() {
         String resultat;
-        resultat = String.format("%s: %s, %s, Llibres: ", personaId, dni, telefon);
+        resultat = String.format("%s: %s, %s, Llibres: %s", personaId, dni, telefon, queryLlibres());
         return resultat;
     }
     

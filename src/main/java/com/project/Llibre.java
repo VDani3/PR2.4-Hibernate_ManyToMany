@@ -21,7 +21,7 @@ public class Llibre {
     private String editorial;
 
     @ManyToOne
-    @JoinColumn(name = "autor_id", insertable = false, updatable = false)
+    @JoinColumn(name = "autorId", insertable = false, updatable = false)
     private Autor autor;
 
     @ManyToMany(mappedBy = "llibres")

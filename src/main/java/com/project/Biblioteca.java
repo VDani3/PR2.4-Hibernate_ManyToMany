@@ -61,19 +61,33 @@ public class Biblioteca {
         this.llibres = llibres;
     }
 
-    public List<Object[]> queryLlibres () {
-		long id = this.getBibliotecaId();
-		return Manager.queryTable("SELECT DISTINCT e.* FROM Llibres_Biblioteca ec, Employee e WHERE e.id = ec.llibreId AND ec.bibliotecaId = " + id);
-	}
+    public String queryLlibres() {
+        long id = this.getBibliotecaId();
+        String queryString = "SELECT DISTINCT l.* FROM Llibre l " +
+                            "JOIN Llibres_Biblioteca lb ON l.llibreId = lb.llibres_llibreId " +
+                            "WHERE lb.biblioteques_bibliotecaId = " + id;
+    
+        List<Object[]> results = Manager.queryTable(queryString);
+    
+        StringBuilder resultString = new StringBuilder();
+        
+        resultString.append("[");
+        for (Object[] row : results) {
+            for (Object column : row) {
+                resultString.append(column).append(", ");
+            }
+           resultString.append("| ");
+        }
+        resultString.append("]");
+    
+        return resultString.toString();
+    }
 
     public String toString() {
         String resultat;
-        resultat = String.format("%s: %s, %s, Llibres: ", bibliotecaId, nom, ciutat);
+        resultat = String.format("%s: %s, %s, Llibres: %s", bibliotecaId, nom, ciutat, queryLlibres());
         return resultat;
     }
-
-
-
 
 
 }
